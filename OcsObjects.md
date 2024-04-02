@@ -1,0 +1,48 @@
+# Request
+## Subscriber identifiers
+When present in a request, this object is used to identify a subscriber via one of its identifiers. Please note that only
+one identifier can be provided.
+
+| Attribute      | Presence | Description                                                                                                                                                                                 |
+|----------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| imsi           | Optional | The IMSI of the subscriber. In requests listing subscribers, you can provide an IMSI prefix, but in request that needs to identify one single subscriber you must provide exact IMSI.       |
+| iccid          | Optional | The ICCID of the subscriber. In requests listing subscribers, you can provide an ICCID prefix, but in request that needs to identify one single subscriber you must provide exact ICCID.    |
+| msisdn         | Optional | The MSISDN of the subscriber. In requests listing subscribers, you can provide an MSISDN prefix, but in request that needs to identify one single subscriber you must provide exact MSISDN. |
+| multiImsi      | Optional | One of the sponsor IMSI of the subscriber. Ony available for the customer using the Multi-IMSI feature.                                                                                     |
+| activationCode | Optional | The activation code of the eSIM of the user. Must be the exact value.                                                                                                                       |
+| subscriberId   | Optional | The ID of the subscriber.                                                                                                                                                                   |
+
+
+# Answer
+## Subscriber prepaid package
+
+| Attribute                  | Presence  | Description                                                                                                                                                                                                                 |
+|----------------------------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| subscriberprepaidpackageid | Mandatory | The ID of the prepaid package.                                                                                                                                                                                              |
+| subscriberid               | Mandatory | Reference to the subscriber owning this prepaid package.                                                                                                                                                                    |
+| priority                   | Mandatory | Defines the order in which the prepaid packages will be used when more than one packages of the subscriber can be used to charge the subscriber. Lowest priority used first.                                                |
+| locationzoneid             | Mandatory | Reference to the location zone of this prepaid package.                                                                                                                                                                     |
+| pckdatabyte                | Optional  | Max volume (in byte) that can be charged on this prepaid package.                                                                                                                                                           |
+| pckmocsecond               | Optional  | Max number of seconds that can be charged on this prepaid package for MOC.                                                                                                                                                  |
+| pckmtcsecond               | Optional  | Max number of seconds that can be charged on this prepaid package for MTC.                                                                                                                                                  |
+| pckmosmsnumber             | Optional  | Max number of MO-SMS that can be charged on this prepaid package.                                                                                                                                                           |
+| pckmtsmsnumber             | Optional  | Max number of MT-SMS that can be charged on this prepaid package for MTC.                                                                                                                                                   |
+| tsassigned                 | Mandatory | Date and time (UTC+0) this prepaid package was assigned.                                                                                                                                                                    |
+| tsactivationutc            | Optional  | Date and time (UTC+0) this prepaid package was activated.                                                                                                                                                                   |
+| tsexpirationutc            | Optional  | Date and time (UTC+0) this prepaid package will expire.                                                                                                                                                                     |
+| useddatabyte               | Optional  | Volume (in byte) currently charged on this prepaid package.                                                                                                                                                                 |
+| usedmocsecond              | Optional  | Number of seconds currently charged on this prepaid package for MOC.                                                                                                                                                        |
+| usedmocvoipsecond          | Optional  | Number of seconds currently charged on this prepaid package for VoIP MOC.                                                                                                                                                   |
+| usedmtcsecond              | Optional  | Number of seconds currently charged on this prepaid package for MTC.                                                                                                                                                        |
+| usedmosmsnumber            | Optional  | Number of MO-SMS currently charged on this prepaid package.                                                                                                                                                                 |
+| usedmtsmsnumber            | Optional  | Number of MT-SMS currently charged on this prepaid package.                                                                                                                                                                 |
+| perioddays                 | Optional  | The number of days this prepaid package can be used. Normally equals to the number of days between `tsactivationutc` `tsexpirationutc`. Used to calculated the expiration date when the package is activated by the system. |
+| cost                       | Optional  | The cost of this package in EUR.                                                                                                                                                                                            |
+| templateId                 | Optional  | Reference to the prepaid package template ID used to instantiate this prepaid package.                                                                                                                                      |
+| esimId                     | Optional  | Reference to eSIM to which this prepaid package is attached.                                                                                                                                                                |
+| rdbDestinationZones        | Optional  | Object where you will find the destination zone name.                                                                                                                                                                       |
+| rdbLocationZones           | Optional  | Object where you will find the location zone name.                                                                                                                                                                          |
+| packageTemplate            | Optional  | Object where you will find the prepaid package                                                                                                                                                                              |
+| active                     | Mandatory | Flag indicating if the package is active or not. Inactive package are not used to charge the subscriber, even if it remains units on the package                                                                            |
+| recurringPackage           | Optional  | If not present, the package is regular, not recurring. If provided, it contains the reference to the recurring packages.                                                                                                    |
+
